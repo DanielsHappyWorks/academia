@@ -1,0 +1,29 @@
+# docker-compose -f docker-compose-dev.yaml build
+# docker-compose -f docker-compose-dev.yaml up
+version: '3.1'
+
+services:
+  app:
+    container_name: academia
+    restart: always
+    build: ../
+    ports:
+    - '80:3000'
+    links:
+    - postgres-db
+    environment:
+      DB_DRIVER: postgresql
+      DB_HOST: postgres-db
+      DB_PORT: 5432
+      DB_NAME: postgres
+      DB_USER: postgres
+      DB_PASSWORD: password
+      DB_DLL_AUTO: create
+
+  postgres-db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
+    ports:
+    - 5432:5432
