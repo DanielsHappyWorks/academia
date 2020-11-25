@@ -3,13 +3,14 @@ package com.danielshappyworks.academia.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
 public class Course {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue
     private Long id;
 
     @Column
@@ -34,15 +35,15 @@ public class Course {
     public Course(String name, String description) {
         this.name = name;
         this.description = description;
-        this.professors = null;
-        this.students = null;
+        this.professors = new HashSet<>();
+        this.students = new HashSet<>();
     }
 
     public Course(String name, String description, Set<Professor> professors) {
         this.name = name;
         this.description = description;
-        this.professors = null;
-        this.students = null;
+        this.professors = professors;
+        this.students = new HashSet<>();
     }
 
     public Long getId() {
@@ -77,8 +78,16 @@ public class Course {
         return professors;
     }
 
+    public void assignProfessor(Professor professor) {
+        this.professors.add(professor);
+    }
+
     public void setStudents(Set<Student> students) {
         this.students = students;
+    }
+
+    public void registerStudent(Student student) {
+        this.students.add(student);
     }
 
     public Set<Student> getStudents() {

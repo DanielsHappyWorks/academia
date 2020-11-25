@@ -9,7 +9,7 @@ import java.util.Set;
 @Entity
 public class Professor {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue
     private Long id;
 
     @Column
